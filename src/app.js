@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 
-import FeatureList from "./component/feature-list.js";
+import DemoList from "./component/demo-list.js";
+import "./style/app.css";
+
 
 export default class App extends Component {
     constructor(props) {
@@ -9,8 +11,8 @@ export default class App extends Component {
     render(){
         return (
             <div>
-                <h1>Hello Enzyme!</h1>
-                <FeatureList />
+                <h1>Hello React!</h1>
+                <DemoList />
             </div>
         )
     }
