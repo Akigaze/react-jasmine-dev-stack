@@ -1,0 +1,10 @@
+.list{
+    list-style: none;
+    font-size: 18px;
+    color: #333;
+    margin: auto 10px;
+    padding: 0;
+}
+.list li:hover{
+    background-color: #eee;
+}
