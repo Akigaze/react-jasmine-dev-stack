@@ -139,7 +139,7 @@ webpack打包项目的命令和运行服务
 ![index.js](readme-pic/react-index-js-3.png)
 
 ### app.js
-将其他子组件组装成一个app
+将其他子组件组装成一个app  
 ![app.js](readme-pic/react-app-js-4.png)
 
 --------------------
@@ -187,7 +187,7 @@ webpack打包项目的命令和运行服务
 
 ## Jasmine project structure
 
-![jasmine测试项目结构.png](readme-pic\jasmine-test-project-structure.png)
+![jasmine测试项目结构.png](readme-pic/jasmine-test-project-structure.png)
 
 - `spec` folder: `spec`在 Jasmine 中是`测试用例`的意思，`spec`文件夹用于存放测试文件和测试配置文件的目录，其中重要的文件就是`support/jasmine.json`
 - `support` folder: `spec`的子目录，存放`jasmine.json`文件，之所以要有这一级目录，是因为 Jasmine 的源文件中指明了要在项目的`spec/support`目录下找`jasmine.json`文件
