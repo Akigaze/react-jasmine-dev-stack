@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine",
+    "test": "jest",
     "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open",
+    "jest": "jest --coverage",
+    "jasmine": "jasmine",
+    "mods": "jest-codemods"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +28,9 @@
     "ignore-styles": "^5.0.1",
     "jasmine": "^3.3.0",
     "jasmine-enzyme": "^7.0.1",
+    "jest": "^23.6.0",
+    "jest-codemods": "^0.17.0",
+    "jest-enzyme": "^7.0.1",
     "jsdom": "^13.0.0",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
