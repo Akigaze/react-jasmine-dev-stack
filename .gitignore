@@ -3,6 +3,7 @@
 
 # production
 /dist/bundle.js
+/coverage
 
 npm-debug.log*
 yarn-debug.log*
