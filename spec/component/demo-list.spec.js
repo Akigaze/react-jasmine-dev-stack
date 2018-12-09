@@ -7,7 +7,7 @@ describe("Feature List", () => {
     let wrapper = {};
 
     beforeEach(() => {
-        wrapper = shallow(<DemoList />)
+        wrapper = mount(<DemoList />)
     });
 
     it("should Feature List includes a <ul>", () => {
