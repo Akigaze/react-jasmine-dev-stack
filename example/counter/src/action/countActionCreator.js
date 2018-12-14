@@ -1,5 +1,5 @@
 import * as ActionType from "./actionType";
 
-export const increaseAction = (index) => {return {type: ActionType.INCREASEMENT, index}}
+export const increaseAction = () => {return {type: ActionType.INCREASEMENT}}
 
-export const decreaseAction = (index) => {return {type: ActionType.DECREASEMENT, index}}
+export const decreaseAction = () => {return {type: ActionType.DECREASEMENT}}

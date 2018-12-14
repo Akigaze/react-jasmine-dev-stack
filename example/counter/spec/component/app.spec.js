@@ -12,8 +12,7 @@ describe("Test App", function() {
 
     beforeEach(function() {
         mockState = {
-            sum:0,
-            counters:[0,0,0]
+            sum:0
         }
         mockStore = configureMockStore([])(mockState);
         app = mount(

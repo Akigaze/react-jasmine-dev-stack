@@ -2,14 +2,14 @@ import {increaseAction, decreaseAction} from "../../src/action/countActionCreato
 
 describe("counter action test", () => {
     it("create a increase action", () => {
-        const action = increaseAction(1);
+        const action = increaseAction();
 
-        expect(action).toEqual({type: "INCREASEMENT", index:1})
+        expect(action).toEqual({type: "INCREASEMENT"})
     });
 
     it("create a decrease action", () => {
-        const action = decreaseAction(1);
+        const action = decreaseAction();
 
-        expect(action).toEqual({type: "DECREASEMENT", index:1})
+        expect(action).toEqual({type: "DECREASEMENT"})
     });
 });

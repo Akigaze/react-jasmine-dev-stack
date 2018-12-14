@@ -7,37 +7,44 @@ import "./style/app.css";
 
 import {increaseAction, decreaseAction} from "./action/countActionCreator";
 
+const arrayWithLength = (length, value=null) => {
+    return new Array(length).fill(value);
+}
+
 export class App extends Component {
     constructor(props) {
         super(props);
     }
 
     render(){
+        const {increase, decrease} = this.props;
         return (
             <div className="container">
                 <h1>{`The Sum: ${this.props.sum}`}</h1>
-                <CounterGroup {...this.props}/>
+                <CounterGroup size={3} increase={increase} decrease={decrease}/>
             </div>
         )
     }
 }
 
 const CounterGroup = (props) => {
-    const {counters, increase, decrease} = props
-    return counters.map((count, index) => {
-        return <Counter key={index} count={count} clickAdd={() => {increase(index)}} clickReduce={() => {decrease(index)}}/>
+    const {size, increase, decrease} = props;
+    return arrayWithLength(size).map((count, index) => {
+        return <Counter key={index} clickAdd={increase} clickReduce={decrease}/>
     })
 }
 
 const mapStateToProps = (state) => {
     return{
-        sum:state.sum,
-        counters:state.counters
+        sum:state.sum
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({increase: increaseAction, decrease: decreaseAction},dispatch)
+    return bindActionCreators(
+        {increase: increaseAction, decrease: decreaseAction},
+        dispatch
+    )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
