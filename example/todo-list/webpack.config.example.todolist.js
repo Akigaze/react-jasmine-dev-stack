@@ -1,13 +1,13 @@
 const path = require("path");
 
 const config = {
-    entry: "./example/counter/src/index.js",
+    entry: "./example/todo-list/src/index.js",
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "counter", "dist")
+        path: path.resolve(__dirname, "dist")
     },
     mode: "development",
-    watch: true,
+    watch: false,
     watchOptions: {
         ignored: /node_modules/,
         aggregateTimeout: 2000
@@ -27,9 +27,9 @@ const config = {
     },
     devtool: "inline-source-map",
     devServer: {
-        contentBase: "./example/counter/dist",
+        contentBase: "./example/todo-list/dist",
         host: "localhost",
-        port: 8880
+        port: 8881
     }
 }
 
