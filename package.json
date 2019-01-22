@@ -34,6 +34,7 @@
     "jest-codemods": "^0.17.0",
     "jest-enzyme": "^7.0.1",
     "jsdom": "^13.0.0",
+    "lodash": "^4.17.11",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "react-redux": "^6.0.0",
@@ -42,6 +43,6 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.14"
   }
 }
