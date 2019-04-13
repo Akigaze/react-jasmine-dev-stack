@@ -9,7 +9,7 @@ import {increaseAction, decreaseAction} from "./action/countActionCreator";
 
 const arrayWithLength = (length, value=null) => {
     return new Array(length).fill(value);
-}
+};
 
 export class App extends Component {
     constructor(props) {
@@ -32,19 +32,19 @@ const CounterGroup = (props) => {
     return arrayWithLength(size).map((count, index) => {
         return <Counter key={index} clickAdd={increase} clickReduce={decrease}/>
     })
-}
+};
 
 const mapStateToProps = (state) => {
     return{
         sum:state.sum
     }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(
         {increase: increaseAction, decrease: decreaseAction},
         dispatch
     )
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

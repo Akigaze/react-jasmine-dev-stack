@@ -31,6 +31,6 @@ const config = {
         host: "localhost",
         port: 8881
     }
-}
+};
 
 module.exports = config;
