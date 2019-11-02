@@ -116,8 +116,8 @@ module.exports = {
   // Automatically restore mock state between every test
   // restoreMocks: false,
 
-  // The root directory that Jest should scan for tests and modules within
-  // rootDir: null,
+  // The root directory that Jest should scan for tests and modules within, default is the dir this file within
+  // rootDir: "./example/counter",
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [

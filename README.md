@@ -122,7 +122,7 @@ webpack打包项目的命令和运行服务
 ...
 "scripts": {
     "start":"webpack-dev-server --open",
-    "build": "webpack --webpack.config.js"
+    "build": "webpack --config webpack.config.js"
  }
  ...
 ```
@@ -157,12 +157,13 @@ webpack打包项目的命令和运行服务
     - `jasmine`: use global install
     - `node node_modules/jasmine/bin/jasmine`: use locally install
 
-3.  Initialize Jasmine in your project
+3. Initialize Jasmine in your project
 
-    > node node_modules/jasmine/bin/jasmine `init`  
+   > node node_modules/jasmine/bin/jasmine `init`  
 
-    or  
-    > jasmine `init`  
+   or  
+
+   > jasmine `init`  
 
 4.  Set jasmine as your test script in your package.json
 
@@ -182,8 +183,9 @@ webpack打包项目的命令和运行服务
 
     > jasmine spec/appSpec.js
 
-6.  Generate `example` spec and source files by Jasmine
-    > jasmine examples
+6. Generate `example` spec and source files by Jasmine
+
+   > jasmine examples
 
 ## Jasmine project structure
 

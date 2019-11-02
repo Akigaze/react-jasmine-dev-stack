@@ -1,0 +1,16 @@
+{
+    "spec_dir": "__tests__",
+    "spec_files": [
+        "spec/**/*spec.js"
+    ],
+    "helpers": [
+        "helper/babel.setup.js",
+        "helper/jsdom.setup.js",
+        "helper/enzyme.setup.js",
+        "helper/jasmine-exclude.setup.js",
+        "helper/jasmine-enzyme.setup.js",
+        "helper/*.js"
+    ],
+    "stopSpecOnExpectationFailure": false,
+    "random": false
+}

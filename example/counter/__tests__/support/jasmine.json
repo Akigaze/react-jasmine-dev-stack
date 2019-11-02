@@ -1,0 +1,15 @@
+{
+    "spec_dir": "example/counter/__tests__",
+    "spec_files": [
+        "spec/**/*spec.js"
+    ],
+    "helpers": [
+        "helper/babel.setup.js",
+        "helper/enzyme.setup.js",
+        "helper/jasmine-enzyme.setup.js",
+        "helper/jsdom.setup.js",
+        "helper/*.js"
+    ],
+    "stopSpecOnExpectationFailure": false,
+    "random": false
+}
