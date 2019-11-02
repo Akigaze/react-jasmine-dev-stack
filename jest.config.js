@@ -1,6 +1,6 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
-
+console.log("root");
 module.exports = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -117,7 +117,7 @@ module.exports = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  // rootDir: null,
+  // rootDir: "./",
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
@@ -134,7 +134,8 @@ module.exports = {
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   setupFilesAfterEnv: [
-      "<rootDir>/__tests__/helper/enzyme.setup.js"
+      "<rootDir>/__tests__/helper/enzyme.setup.js",
+      '../../node_modules/jest-enzyme/lib/index.js'
   ],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
@@ -151,7 +152,7 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    "**/__tests__/spec/**/?(*.)+(spec|test).[tj]s?(x)"
+    "<rootDir>/__tests__/spec/**/*.spec.js"
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped

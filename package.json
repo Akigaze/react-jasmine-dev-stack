@@ -7,17 +7,14 @@
     "example": "example"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --config=jest.config.js",
     "build": "webpack --config webpack.config.js",
     "start": "webpack-dev-server --open",
     "example.counter": "webpack-dev-server --open --config example/counter/webpack.config.example.counter.js",
     "example.todolist": "webpack-dev-server --open --config example/todo-list/webpack.config.example.todolist.js",
-    "jest": "jest --coverage",
+    "jest": "jest --config=jest.config.js --coverage",
     "jest.counter": "jest --config=example/counter/jest.config.js",
-    "jest.todolist": "jest --config=example/todo-list/jest.config.js",
-    "jasmine": "jasmine --config=__tests__/support/jasmine.json",
-    "jasmine.counter": "jasmine --config=example/counter/__tests__/support/jasmine.json",
-    "jasmine.todolist": "jasmine --config=example/todo-list/__tests__/support/jasmine.json"
+    "jest.todolist": "jest --config=example/todo-list/jest.config.js"
   },
   "repository": {
     "type": "git",
@@ -47,9 +44,6 @@
     "css-loader": "^3.2.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
-    "ignore-styles": "^5.0.1",
-    "jasmine": "^3.5.0",
-    "jasmine-enzyme": "^7.1.2",
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.2",
     "redux-mock-store": "^1.5.3",
