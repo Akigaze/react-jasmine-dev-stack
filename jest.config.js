@@ -1,6 +1,5 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
-console.log("root");
 module.exports = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -64,9 +63,7 @@ module.exports = {
   // maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  moduleDirectories: [
-    "node_modules"
-  ],
+  moduleDirectories: ["node_modules"],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -80,10 +77,11 @@ module.exports = {
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
-      //将jpg,png等图像文件映射成fileMock.js文件所export的模块
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":"<rootDir>/__tests__/mock/file.mock.js",
-      //将css文件映射成styleMock.js文件所export的模块
-      "\\.(css|less)$": "<rootDir>/__tests__/mock/style.mock.js"
+    //将jpg,png等图像文件映射成fileMock.js文件所export的模块
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__tests__/mock/file.mock.js",
+    //将css文件映射成styleMock.js文件所export的模块
+    "\\.(css|less)$": "<rootDir>/__tests__/mock/style.mock.js"
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -128,14 +126,12 @@ module.exports = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: [
-      "<rootDir>/__tests__/helper/jsdom.setup.js"
-  ],
+  setupFiles: ["<rootDir>/__tests__/helper/jsdom.setup.js"],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   setupFilesAfterEnv: [
-      "<rootDir>/__tests__/helper/enzyme.setup.js",
-      '../../node_modules/jest-enzyme/lib/index.js'
+    "<rootDir>/__tests__/helper/enzyme.setup.js",
+    "<rootDir>/node_modules/jest-enzyme/lib/index.js"
   ],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
@@ -151,14 +147,10 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  testMatch: [
-    "<rootDir>/__tests__/spec/**/*.spec.js"
-  ],
+  testMatch: ["<rootDir>/__tests__/spec/**/*.spec.js"],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: [
-    "\\\\node_modules\\\\"
-  ],
+  testPathIgnorePatterns: ["\\\\node_modules\\\\"]
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],

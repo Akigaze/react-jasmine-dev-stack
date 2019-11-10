@@ -1,4 +1,4 @@
-const presets = [["@babel/env", {useBuiltIns: false}], ["@babel/react"]];
+const presets = [["@babel/env", { useBuiltIns: false }], ["@babel/react"]];
 
 const plugins = [["@babel/plugin-proposal-class-properties"]];
 

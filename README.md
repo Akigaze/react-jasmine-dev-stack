@@ -1,103 +1,76 @@
-# 搭建步骤
-1. create react project by webpack
-2. install and use Jasmine
-3. install and use Enzyme with Jasmine
+### 0. 项目结构
+![](./readme-pic/react-dev-stack-project-structure.png)
 
-1. create react project by webpack
-## 1.所需要的依赖
+### 1. 安装webpak和babel依赖
+#### 1.1 开发依赖
+```json
+"devDependencies": {
+  "@babel/cli": "^7.6.4",
+  "@babel/core": "^7.6.4",
+  "@babel/preset-env": "^7.6.3",
+  "@babel/preset-react": "^7.6.3",
+  // 解释ES6中class使用箭头函数做属性
+  "@babel/plugin-proposal-class-properties": "^7.5.5",
+  // webpack打包JS文件
+  "babel-loader": "^8.0.6",
+  // webpack打包class文件
+  "css-loader": "^3.2.0",
+  "style-loader": "^1.0.0",
 
-- webpack
-- webpack-cli
-- webpack-dev-server
+  "webpack": "^4.41.2",
+  "webpack-cli": "^3.3.10",
+  "webpack-dev-server": "^3.9.0"
+}
+```
 
-> npm install --save-dev webpack webpack-cli webpack-dev-server
+#### 1.2 babel.config.js
+```javascript
+const presets = [["@babel/env", { useBuiltIns: false }], ["@babel/react"]];
 
-- babel-core
-- babel-cli
-- babel-loader
-- babel-preset-env
-- babel-preset-react
-- babel-preset-stage-1
+const plugins = [["@babel/plugin-proposal-class-properties"]];
 
-> npm install --save babel-core babel-cli babel-loader@7 babel-preset-env babel-preset-react babel-preset-stage-1
+module.exports = { presets, plugins };
+```
 
-由于默认安装的 babel-core 和 babel-cli 是`6.x`的版本，而 babel-loader 是`8.x`的版本，这个版本的 babel-loader 需要`7.x`以上的 babel-core，因此要降低 babel-loader 的版本到`7.x`，以适应 babel-core 和 babel-cli。  
-babel-preset-stage-1 是用于翻译class中使用箭头函数定义类方法的语法
-
-- css-loader
-- style-loader
-
-> npm install --save css-loader style-loader
-
-样式打包的工具，css-loader：遍历加载CSS文件，style-loader：生成style标记
-
-- react
-- react-dom
-
-> npm install --save react react-dom
-
-对于bable的模块，若使用`--save-dev`安装，在使用webpack命令打包项目时，很可能出现`babel-loader`找不到的异常而打包失败，此时可以将babel的所有模块卸载，重新使用`--save`选项安装，此时就可以成功执行webpack打包。然后再将所有babel模块重新用`--save-dev`安装，也可以正常工作了。
-
-对于`css-loader`和`style-loader`也有上述的发现。
-
-## 2.项目结构
-
-- node_modules
-- dist
-  - index.html
-  - bundle.js
-- src
-  - component
-  - app.js
-  - index.js
-- .babelrc
-- webpack.config.js
-- package.json
-
-![项目结构](readme-pic/react-project-structure-1.png)
-
-## 3.配置文件
-
-### webpack.config.js
-
+#### 1.3 webpack.config.js
 ```javascript
 const path = require("path");
 
 const config = {
+  // 打包的入口文件
   entry: "./src/index.js",
+  // 打包输出的目录和文件夹
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist")
   },
-  module: {
-    rules: [
-      {
-        test: /\.js/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["env", "react", "stage-1"]
-          }
-        },
-        exclude: /(node_modules|bower_components)/
-        },
-        // 样式加载器，必须将`css-loader`放在最后，因为use对loader的加载顺序是从后往前的，先遍历加载CSS资源，再生成style标记。
-        {
-            test: /\.css/,
-            use: ["style-loader", "css-loader"],
-            exclude: /(node_modules|bower_components)/
-        }
-    ]
-  },
-  //开启监听
-  watch: true,
+
+  mode: "development",
+  // 打包监听
+  watch: false,
   watchOptions: {
     ignored: /node_modules/,
     aggregateTimeout: 2000
   },
-  mode: "development",
-  devtool: "inline-source-map",//开发调试的工具
-  // webpack-dev-server的服务器配置
+
+  module: {
+    rules: [
+      // JS 加载配置
+      {
+        test: /\.js/,
+        use: ["babel-loader"],
+        exclude: /(node_modules|bower_components)/
+      },
+      // CSS 加载配置
+      {
+        test: /\.css/,
+        use: ["style-loader", "css-loader"],
+        exclude: /(node_modules|bower_components)/
+      }
+    ]
+  },
+  devtool: "inline-source-map",
+  // webpack-dev-server 对webpack服务的配置
   devServer: {
     contentBase: "./dist",
     host: "localhost",
@@ -108,259 +81,214 @@ const config = {
 module.exports = config;
 ```
 
-### .babelrc(可选)
-若 webpack.config.js 配置 loader 的 `options` ，则可以不需要
+### 2. 安装React相关的配置
+#### 2.1 react依赖
 ```json
-{
-  "presets": ["env", "react", "stage-1"]
-}
-
+"dependencies": {
+  "react": "^16.11.0",
+  "react-dom": "^16.11.0",
+  "react-redux": "^6.0.0",
+  "redux": "^4.0.1"
+},
 ```
-### package.json
-webpack打包项目的命令和运行服务
+
+#### 2.2 配置运行打包命令
+**package.json：**
 ```json
-...
 "scripts": {
-    "start":"webpack-dev-server --open",
-    "build": "webpack --config webpack.config.js"
- }
- ...
-```
-
-## 4.文件基本结构
-### index.html
-1. 提供一个App的容器，如：`<div id="root"></div>`
-2. 引用webpack打包后的bundle.js文件
-
-![index.html](readme-pic/react-index-html-2.png)
-
-### index.js
-使用`ReactDOM`将APP组件渲染到index.html的容器中
-![index.js](readme-pic/react-index-js-3.png)
-
-### app.js
-将其他子组件组装成一个app  
-![app.js](readme-pic/react-app-js-4.png)
-
---------------------
-
-# install and use Jasmine
-## install and init Jasmine
-1.  Add Jasmine to your package.json  
-    *use local install and global install*
-
-    > npm install --save-dev jasmine  
-    > npm install -g jasmine
-
-2.  Use `jasmine` command
-
-    - `jasmine`: use global install
-    - `node node_modules/jasmine/bin/jasmine`: use locally install
-
-3. Initialize Jasmine in your project
-
-   > node node_modules/jasmine/bin/jasmine `init`  
-
-   or  
-
-   > jasmine `init`  
-
-4.  Set jasmine as your test script in your package.json
-
-```json
-"scripts": { "test": "jasmine" }
-```
-
-5.  Run your tests
-
-    > npm test
-
-    > jasmine
-
-    > node node_modules/jasmine/bin/jasmine.js
-
-    // run specific test file
-
-    > jasmine spec/appSpec.js
-
-6. Generate `example` spec and source files by Jasmine
-
-   > jasmine examples
-
-## Jasmine project structure
-
-![jasmine测试项目结构.png](readme-pic/jasmine-test-project-structure.png)
-
-- `spec` folder: `spec`在 Jasmine 中是`测试用例`的意思，`spec`文件夹用于存放测试文件和测试配置文件的目录，其中重要的文件就是`support/jasmine.json`
-- `support` folder: `spec`的子目录，存放`jasmine.json`文件，之所以要有这一级目录，是因为 Jasmine 的源文件中指明了要在项目的`spec/support`目录下找`jasmine.json`文件
-- `jasmine.json`: 项目中 jasmine 的配置文件，在**Configuration**中介绍
-
-## Jasmine Configuration
-
-```javascript
-{
-    // Spec directory path relative to the current working dir when jasmine is executed.
-    "spec_dir": "spec",
-
-    // Array of filepaths (and globs) relative to spec_dir to include
-    "spec_files": [
-        "**/*spec.js"
-    ],
-
-    // Array of filepaths (and globs) relative to spec_dir to include before jasmine specs
-    "helpers": [
-        "helper/*.js"
-    ],
-
-    // Stop execution of a spec after the first expectation failure in it
-    stopSpecOnExpectationFailure: false,
-
-    // Run specs in semi-random order
-    random: false
+  "build": "webpack --config webpack.config.js",
+  "start": "webpack-dev-server --open"
 }
 ```
 
-- 使用一颗星`*`表示匹配任意字符；使用两颗星`**`则可以匹配任意目录
-- 完成 Jasmine 的配置后，在编写测试文件时，无需引入 jasmine 的模块
-
--------------------------
-
-# install and use Enzyme with Jasmine
-## 准备
-1. 搭建一个React的开发环境
-2. 搭建基本的Jasmine测试环境
-
-## 依赖模块
-- enzyme
-- jasmine-enzyme
-- jsdom
-- enzyme-adapter-react-16(针对react 16.x)
-
-enzyme 为react测试提供核心的API  
-enzyme-adapter-react-16 enzyme的react适配器，用于向Enzyme配置正确的react版本   
-jasmine-enzyme 是jasmine配合enzyme使用的扩增matcher库，增加了许多UI测试的断言API，但不是必须的  
-jsdom 由于nodeJS没有DOM环境，jsdom可以提供一个node的DOM环境，用于react构造组件和虚拟DOM  
-
-- react
-- react-dom
-- babel-core 或 babel-register
-- babel-preset-react
-- jasmine
-
-这部分依赖是在构建react和jasmine环境是要用到的，同时也是搭建Enzyme测试环境必须的依赖  
-
-Jasmine似乎不支持ES6的一些语法(import)，所以在测试文件开头都要导入`babel-register`或`babel-core\register`进行语法的转码，而`babel-core\register`在Babel 7.x之后就从`babel-core`移除
-
-![Jasmine的Enzyme测试环境依赖](readme-pic/jasmine-enzyme-dependency.png)
-
-## 配置
-- babel setup
-- enzyme setup
-- jsdom setup
-- style setup
-
-这些配置都是在测试的前期准备，可以理解为`beforeEach`，通过创建相应的配置文件，配置到`jasmine.json`的`helpers`列表中即可  
-
-同时这些配置文件的引入顺序也要按上述的顺序
-
-### babel setup
-引入babel对ES6的语法进行翻译
-
+#### 2.3 检验运行  
+**src/index.js：**
 ```javascript
-// babel.setup.js
-require("babel-register");
-```
-或
-```javascript
-// babel.setup.js
-require("babel-core/register");
-/*
-"babel-core/register" is same as "babel-register"
-Since Babel7.x, "register" was removed from "babel/core"
+/****** redux 相关配置 *****
+import {createStore} from "redux";
+import {Provider} from "react-redux";
+import reducer from "./reducer";
+const store = createStore(reducer);
+const app = (
+    <Provider store={store}>
+        <App/>
+    </Provider>
+);
 */
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./app";
+
+ReactDOM.render(<App />, document.getElementById("root"));
 ```
 
-### enzyme setup
-配置Enzyme的React适配器  
-在每个spec启动前加载jasmine-enzyme
-
+**src/app.js：**
 ```javascript
-//enzyme.setup.js
-import jasmineEnzyme from "jasmine-enzyme";
+import React, { Component } from "react";
+import "./style/app.css";
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <h1>Hello React!</h1>
+      </div>
+    );
+  }
+}
+```
+
+**dist/index.html：**
+```html
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/javascript" src="bundle.js"></script>
+  </body>
+</html>
+```
+
+#### 2.4 react router配置
+**package.json：**
+```json
+"dependencies":{
+  "react-router-dom": "^5.1.2"
+}
+```
+
+**webpac.config.js：**
+```javascript
+// historyApiFallback：配置通过浏览器地址栏访问资源不存在时的
+devServer: {
+    contentBase: "./dist",
+    host: "localhost",
+    port: 8888,
+    historyApiFallback: true,
+    /*** 更细致的配置 ***
+    historyApiFallback: {
+        rewrites: [
+            { from: /^\/hsl\/\d+\/\d+\/\d+/, to: "/index.html" },
+            { from: /^\/rgb\/\d+\/\d+\/\d+/, to: "/index.html" },
+            { from: /./, to: "/404.html" }
+        ]
+    }
+    */
+}
+```
+
+
+### 3. 配置Jest+Enzyme的测试环境
+#### 3.1 添加依赖
+```json
+"devDependencies": {
+  "enzyme": "^3.10.0",
+  "enzyme-adapter-react-16": "^1.15.1",
+  "jest": "^24.9.0",
+  "jest-enzyme": "^7.1.2",
+  "redux-mock-store": "^1.5.3"
+}
+```
+
+#### 3.2 配置文件
+**jest.config.js：**
+```javascript
+// 使用 jset --init 命令生成配置文件
+// <rootDir> 指该配置文件所在目录
+module.exports = {
+  // Automatically clear mock calls and instances between every test
+  clearMocks: true,
+  // The directory where Jest should output its coverage files
+  coverageDirectory: "coverage",
+  // An array of directory names to be searched recursively up from the requiring module's location
+  moduleDirectories: ["node_modules"],
+  // A map from regular expressions to module names that allow to stub out resources with a single module
+  moduleNameMapper: {
+    //将jpg,png等图像文件映射成fileMock.js文件所export的模块
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":"<rootDir>/__tests__/mock/file.mock.js",
+    //将css文件映射成styleMock.js文件所export的模块
+    "\\.(css|less)$": "<rootDir>/__tests__/mock/style.mock.js"
+  },
+  // The paths to modules that run some code to configure or set up the testing environment before each test
+  setupFiles: ["<rootDir>/__tests__/helper/jsdom.setup.js"],
+  // A list of paths to modules that run some code to configure or set up the testing framework before each test
+  setupFilesAfterEnv: [
+    "<rootDir>/__tests__/helper/enzyme.setup.js",
+    "<rootDir>/node_modules/jest-enzyme/lib/index.js"
+  ],
+  // The test environment that will be used for testing
+  testEnvironment: "jest-environment-jsdom",
+
+  // The glob patterns Jest uses to detect test files
+  testMatch: [
+    "<rootDir>/__tests__/spec/**/*.spec.js"
+  ],
+  // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
+  testPathIgnorePatterns: [
+    "\\\\node_modules\\\\"
+  ],
+};
+```
+
+**__tests__/helper/enzyme.setup.js：**
+```javascript
 import { configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 configure({ adapter: new Adapter() });
-
-beforeEach(function() {
-  jasmineEnzyme();
-});
 ```
 
-若不使用jasmine-enzyme，则只需要：
+**__tests__/helper/jsdom.setup.js：**
 ```javascript
-//enzyme.setup.js
-import { configure } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { JSDOM } from "jsdom";
 
-configure({ adapter: new Adapter() });
-```
-### jsdom setup
-提供node的DOM环境，若没有DOM环境，enzyme的`mount`和`shallow`无法成功模拟react控件，测试启动会抛异常
-
-```javascript
-//jsdom.setup.js
-import {JSDOM} from 'jsdom';
-
-const dom = new JSDOM('<html><body></body></html>');
-global.document = dom.window.document;
+const dom = new JSDOM("<html><body></body></html>");
 global.window = dom.window;
+global.document = dom.window.document;
 global.navigator = dom.window.navigator;
 ```
 
-### style setup
-对于Enzyme模拟的组件来说，真正去加载组件中的图片或CSS样式是比较消耗资源，也是没有必要的，因此有一些文件是必须被忽略掉的，否则
-
-`ignore-styles`这么包可以忽略文件中导入的样式文件
-> npm install --save-dev ignore-styles
-
-在测试文件中直接导入该模块即可自动忽略CSS样式文件的加载
+**__tests__/mock/style.mock.js && __tests__/mock/file.mock.js：**
 ```javascript
-import "ignore-styles";
+// __tests__/mock/style.mock.js
+module.exprots = {};
+
+// __tests__/mock/file.mock.js
+module.exports = "mock file";
 ```
 
-### jasmine.json helpers
-将所有setup文件依次添加到jasmine.json的helpers列表中
-
-```json
-{    
-    "helpers": [
-        "helper/babel.setup.js",
-        "helper/enzyme.setup.js",
-        "helper/jsdom.setup.js",
-        "helper/*.js"
-    ]
-}
-```
-
-## 使用Enzyme
-在引入被测试的组件之前，必须向引入"react"
+#### 3.3 编写测试
+**__tests__\spec\app.spec.js：**
 ```javascript
 import React from "react";
-import { mount, shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
+import App from "../../src/app";
 
-import TodoList from "../../src/component/todo-list";
-
-describe("todo list", () => {
-  let wrapper = {};
-  beforeEach(() => {
-    wrapper = shallow(<TodoList />);
+describe("App", () => {
+  it("should render Hello React! header", () => {
+    const app = shallow(<App />);
+    expect(app.find("h1").text()).toBe("Hello React!");
   });
 
-  it("title", () => {
-    //toHaveClassName 和 toHaveClassName 都是jasmine-enzyme的断言API
-    expect(wrapper.find("header")).toHaveClassName("title");
-    expect(wrapper.find("header")).toHaveText("Todo List");
+  it("t1", () => {
+    expect(1 + 2).toBe(3);
+    expect(1 * 2).not.toBe(3);
   });
-});
+})
+```
+
+#### 3.4 运行
+**package.json：**
+```json
+"scripts": {
+  "test": "jest --config=jest.config.js",
+  "jest": "jest --config=jest.config.js --coverage"
+}
 ```
